@@ -2,6 +2,7 @@
 
 DROP TABLE IF EXISTS club_member_info;
 CREATE TABLE club_member_info (
+	member_id serial,
 	full_name varchar(100),
 	age int,
 	maritial_status varchar(50),
@@ -9,7 +10,8 @@ CREATE TABLE club_member_info (
 	phone varchar(20),
 	full_address varchar(150),
 	job_title varchar(100),
-	membership_date date
+	membership_date date,
+	PRIMARY KEY (member_id)
 );
 
 COPY club_member_info (

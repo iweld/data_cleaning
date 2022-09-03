@@ -29,18 +29,18 @@ LIMIT 10;
 
 -- Results:
 
-full_name            |age|maritial_status|email                   |phone       |full_address                                |job_title                   |membership_date|
----------------------+---+---------------+------------------------+------------+--------------------------------------------+----------------------------+---------------+
-addie lush           | 40|married        |alush0@shutterfly.com   |254-389-8708|3226 Eastlawn Pass,Temple,Texas             |Assistant Professor         |     2013-07-31|
-ROCK CRADICK         | 46|married        |rcradick1@newsvine.com  |910-566-2007|4 Harbort Avenue,Fayetteville,North Carolina|Programmer III              |     2018-05-27|
-???Sydel Sharvell    | 46|divorced       |ssharvell2@amazon.co.jp |702-187-8715|4 School Place,Las Vegas,Nevada             |Budget/Accounting Analyst I |     2017-10-06|
-Constantin de la cruz| 35|               |co3@bloglines.com       |402-688-7162|6 Monument Crossing,Omaha,Nebraska          |Desktop Support Technician  |     2015-10-20|
-  Gaylor Redhole     | 38|married        |gredhole4@japanpost.jp  |917-394-6001|88 Cherokee Pass,New York City,New York     |Legal Assistant             |     2019-05-29|
-Wanda del mar        | 44|single         |wkunzel5@slideshare.net |937-467-6942|10864 Buhler Plaza,Hamilton,Ohio            |Human Resources Assistant IV|     2015-03-24|
-Jo-ann Kenealy       | 41|married        |jkenealy6@bloomberg.com |513-726-9885|733 Hagan Parkway,Cincinnati,Ohio           |Accountant IV               |     2013-04-17|
-Joete Cudiff         | 51|separated      |jcudiff7@ycombinator.com|616-617-0965|975 Dwight Plaza,Grand Rapids,Michigan      |Research Nurse              |     2014-11-16|
-mendie alexandrescu  | 46|single         |malexandrescu8@state.gov|504-918-4753|34 Delladonna Terrace,New Orleans,Louisiana |Systems Administrator III   |     1921-03-12|
-fey kloss            | 52|married        |fkloss9@godaddy.com     |808-177-0318|8976 Jackson Park,Honolulu,Hawaii           |Chemical Engineer           |     2014-11-05|
+member_id|full_name            |age|maritial_status|email                   |phone       |full_address                                |job_title                   |membership_date|
+---------+---------------------+---+---------------+------------------------+------------+--------------------------------------------+----------------------------+---------------+
+        1|addie lush           | 40|married        |alush0@shutterfly.com   |254-389-8708|3226 Eastlawn Pass,Temple,Texas             |Assistant Professor         |     2013-07-31|
+        2|ROCK CRADICK         | 46|married        |rcradick1@newsvine.com  |910-566-2007|4 Harbort Avenue,Fayetteville,North Carolina|Programmer III              |     2018-05-27|
+        3|???Sydel Sharvell    | 46|divorced       |ssharvell2@amazon.co.jp |702-187-8715|4 School Place,Las Vegas,Nevada             |Budget/Accounting Analyst I |     2017-10-06|
+        4|Constantin de la cruz| 35|               |co3@bloglines.com       |402-688-7162|6 Monument Crossing,Omaha,Nebraska          |Desktop Support Technician  |     2015-10-20|
+        5|  Gaylor Redhole     | 38|married        |gredhole4@japanpost.jp  |917-394-6001|88 Cherokee Pass,New York City,New York     |Legal Assistant             |     2019-05-29|
+        6|Wanda del mar        | 44|single         |wkunzel5@slideshare.net |937-467-6942|10864 Buhler Plaza,Hamilton,Ohio            |Human Resources Assistant IV|     2015-03-24|
+        7|Jo-ann Kenealy       | 41|married        |jkenealy6@bloomberg.com |513-726-9885|733 Hagan Parkway,Cincinnati,Ohio           |Accountant IV               |     2013-04-17|
+        8|Joete Cudiff         | 51|separated      |jcudiff7@ycombinator.com|616-617-0965|975 Dwight Plaza,Grand Rapids,Michigan      |Research Nurse              |     2014-11-16|
+        9|mendie alexandrescu  | 46|single         |malexandrescu8@state.gov|504-918-4753|34 Delladonna Terrace,New Orleans,Louisiana |Systems Administrator III   |     1921-03-12|
+       10|fey kloss            | 52|married        |fkloss9@godaddy.com     |808-177-0318|8976 Jackson Park,Honolulu,Hawaii           |Chemical Engineer           |     2014-11-05|
 
 /*
 
@@ -50,7 +50,8 @@ Lets create a temp table where we can manipulate and restructure the data withou
 
 DROP TABLE IF EXISTS cleaned_club_member_info;
 CREATE TABLE cleaned_club_member_info AS (
-	SELECT 
+	SELECT
+		member_id,
 		-- Some of the names have extra spaces and special characters.  Trim access whitespace, remove special characters 
 		-- and convert to lowercase.
 		-- In this particular dataset, special characters only occur in the first name that can be removed using a simple regex.
@@ -125,20 +126,80 @@ LIMIT 10;
 
 -- Results:
 
-first_name|last_name   |age|maritial_status|member_email            |phone       |street_address       |city         |state         |occupation                 |membership_date|
-----------+------------+---+---------------+------------------------+------------+---------------------+-------------+--------------+---------------------------+---------------+
-addie     |lush        | 40|married        |alush0@shutterfly.com   |254-389-8708|3226 eastlawn pass   |temple       |texas         |assistant professor        |     2013-07-31|
-rock      |cradick     | 46|married        |rcradick1@newsvine.com  |910-566-2007|4 harbort avenue     |fayetteville |north carolina|programmer 3               |     2018-05-27|
-sydel     |sharvell    | 46|divorced       |ssharvell2@amazon.co.jp |702-187-8715|4 school place       |las vegas    |nevada        |budget/accounting analyst 1|     2017-10-06|
-constantin|de la cruz  | 35|               |co3@bloglines.com       |402-688-7162|6 monument crossing  |omaha        |nebraska      |desktop support technician |     2015-10-20|
-gaylor    |redhole     | 38|married        |gredhole4@japanpost.jp  |917-394-6001|88 cherokee pass     |new york city|new york      |legal assistant            |     2019-05-29|
-wanda     |del mar     | 44|single         |wkunzel5@slideshare.net |937-467-6942|10864 buhler plaza   |hamilton     |ohio          |human resources assistant 4|     2015-03-24|
-joann     |kenealy     | 41|married        |jkenealy6@bloomberg.com |513-726-9885|733 hagan parkway    |cincinnati   |ohio          |accountant 4               |     2013-04-17|
-joete     |cudiff      | 51|separated      |jcudiff7@ycombinator.com|616-617-0965|975 dwight plaza     |grand rapids |michigan      |research nurse             |     2014-11-16|
-mendie    |alexandrescu| 46|single         |malexandrescu8@state.gov|504-918-4753|34 delladonna terrace|new orleans  |louisiana     |systems administrator 3    |     2021-03-12|
-fey       |kloss       | 52|married        |fkloss9@godaddy.com     |808-177-0318|8976 jackson park    |honolulu     |hawaii        |chemical engineer          |     2014-11-05|
+member_id|first_name|last_name   |age|maritial_status|member_email            |phone       |street_address       |city         |state         |occupation                 |membership_date|
+---------+----------+------------+---+---------------+------------------------+------------+---------------------+-------------+--------------+---------------------------+---------------+
+        1|addie     |lush        | 40|married        |alush0@shutterfly.com   |254-389-8708|3226 eastlawn pass   |temple       |texas         |assistant professor        |     2013-07-31|
+        2|rock      |cradick     | 46|married        |rcradick1@newsvine.com  |910-566-2007|4 harbort avenue     |fayetteville |north carolina|programmer 3               |     2018-05-27|
+        3|sydel     |sharvell    | 46|divorced       |ssharvell2@amazon.co.jp |702-187-8715|4 school place       |las vegas    |nevada        |budget/accounting analyst 1|     2017-10-06|
+        4|constantin|de la cruz  | 35|               |co3@bloglines.com       |402-688-7162|6 monument crossing  |omaha        |nebraska      |desktop support technician |     2015-10-20|
+        5|gaylor    |redhole     | 38|married        |gredhole4@japanpost.jp  |917-394-6001|88 cherokee pass     |new york city|new york      |legal assistant            |     2019-05-29|
+        6|wanda     |del mar     | 44|single         |wkunzel5@slideshare.net |937-467-6942|10864 buhler plaza   |hamilton     |ohio          |human resources assistant 4|     2015-03-24|
+        7|joann     |kenealy     | 41|married        |jkenealy6@bloomberg.com |513-726-9885|733 hagan parkway    |cincinnati   |ohio          |accountant 4               |     2013-04-17|
+        8|joete     |cudiff      | 51|separated      |jcudiff7@ycombinator.com|616-617-0965|975 dwight plaza     |grand rapids |michigan      |research nurse             |     2014-11-16|
+        9|mendie    |alexandrescu| 46|single         |malexandrescu8@state.gov|504-918-4753|34 delladonna terrace|new orleans  |louisiana     |systems administrator 3    |     2021-03-12|
+       10|fey       |kloss       | 52|married        |fkloss9@godaddy.com     |808-177-0318|8976 jackson park    |honolulu     |hawaii        |chemical engineer          |     2014-11-05|
 
+-- Now that the data is cleaned, lets look for any duplicate entries.  What is the record count?
 
+SELECT count(*) AS record_count FROM cleaned_club_member_info;
+
+-- Results:
+
+record_count|
+------------+
+        2010|
+
+-- All members must have a unique email address to join. Lets try to find duplicate entries.  Since we do not have a primary key
+-- lets add a row_number and partition by member_email
+
+SELECT 
+	member_email,
+	count(member_email)
+FROM 
+	cleaned_club_member_info
+GROUP BY 
+	member_email
+HAVING 
+	count(member_email) > 1
+	
+-- Results: 10 duplicate entries.
+	
+member_email              |count|
+--------------------------+-----+
+hbradenri@freewebs.com    |    2|
+omaccaughen1o@naver.com   |    2|
+greglar4r@answers.com     |    2|
+ehuxterm0@marketwatch.com |    3|
+nfilliskirkd5@newsvine.com|    2|
+tdunkersley8u@dedecms.com |    2|
+slamble81@amazon.co.uk    |    2|
+mmorralleemj@wordpress.com|    2|
+gprewettfl@mac.com        |    2|
+
+-- Lets delete duplicate entries.
+
+DELETE FROM cleaned_club_member_info AS c1
+USING cleaned_club_member_info AS c2
+WHERE c1.member_id < c2.member_id 
+AND c1.member_email = c2.member_email;
+
+-- What is the record count after deletion?
+
+SELECT count(*) AS new_record_count FROM cleaned_club_member_info;
+
+-- Results:
+
+new_record_count|
+----------------+
+            2000|	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 
