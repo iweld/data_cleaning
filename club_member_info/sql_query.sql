@@ -91,20 +91,20 @@ CREATE TABLE cleaned_club_member_info AS (
 		split_part(trim(lower(full_address)), ',', 1) AS street_address,
 		split_part(trim(lower(full_address)), ',', 2) AS city,
 		split_part(trim(lower(full_address)), ',', 3) AS state,
-		-- Some job titles define a level in roman numerals (I, II, III, IV).  Convert levels to numbers.
+		-- Some job titles define a level in roman numerals (I, II, III, IV).  Convert levels to numbers and add descriptor (ex. Level 3).
 		-- Trim whitespace from job title, rename to occupation and if empty convert to null type.
 		CASE
 			WHEN trim(lower(job_title)) = '' THEN NULL
 			ELSE 
 				CASE
 					WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'i'
-						THEN replace(lower(job_title), ' i', ' 1')
+						THEN replace(lower(job_title), ' i', ', level 1')
 					WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'ii'
-						THEN replace(lower(job_title), ' ii', ' 2')
+						THEN replace(lower(job_title), ' ii', ', level 2')
 					WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'iii'
-						THEN replace(lower(job_title), ' iii', ' 3')
+						THEN replace(lower(job_title), ' iii', ', level 3')
 					WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'iv'
-						THEN replace(lower(job_title), ' iv', ' 4')
+						THEN replace(lower(job_title), ' iv', ', level 4')
 					ELSE trim(lower(job_title))
 				END 
 		END AS occupation,
@@ -126,18 +126,18 @@ LIMIT 10;
 
 -- Results:
 
-member_id|first_name|last_name   |age|maritial_status|member_email            |phone       |street_address       |city         |state         |occupation                 |membership_date|
----------+----------+------------+---+---------------+------------------------+------------+---------------------+-------------+--------------+---------------------------+---------------+
-        1|addie     |lush        | 40|married        |alush0@shutterfly.com   |254-389-8708|3226 eastlawn pass   |temple       |texas         |assistant professor        |     2013-07-31|
-        2|rock      |cradick     | 46|married        |rcradick1@newsvine.com  |910-566-2007|4 harbort avenue     |fayetteville |north carolina|programmer 3               |     2018-05-27|
-        3|sydel     |sharvell    | 46|divorced       |ssharvell2@amazon.co.jp |702-187-8715|4 school place       |las vegas    |nevada        |budget/accounting analyst 1|     2017-10-06|
-        4|constantin|de la cruz  | 35|               |co3@bloglines.com       |402-688-7162|6 monument crossing  |omaha        |nebraska      |desktop support technician |     2015-10-20|
-        5|gaylor    |redhole     | 38|married        |gredhole4@japanpost.jp  |917-394-6001|88 cherokee pass     |new york city|new york      |legal assistant            |     2019-05-29|
-        6|wanda     |del mar     | 44|single         |wkunzel5@slideshare.net |937-467-6942|10864 buhler plaza   |hamilton     |ohio          |human resources assistant 4|     2015-03-24|
-        7|joann     |kenealy     | 41|married        |jkenealy6@bloomberg.com |513-726-9885|733 hagan parkway    |cincinnati   |ohio          |accountant 4               |     2013-04-17|
-        8|joete     |cudiff      | 51|separated      |jcudiff7@ycombinator.com|616-617-0965|975 dwight plaza     |grand rapids |michigan      |research nurse             |     2014-11-16|
-        9|mendie    |alexandrescu| 46|single         |malexandrescu8@state.gov|504-918-4753|34 delladonna terrace|new orleans  |louisiana     |systems administrator 3    |     2021-03-12|
-       10|fey       |kloss       | 52|married        |fkloss9@godaddy.com     |808-177-0318|8976 jackson park    |honolulu     |hawaii        |chemical engineer          |     2014-11-05|
+member_id|first_name|last_name   |age|maritial_status|member_email            |phone       |street_address       |city         |state         |occupation                        |membership_date|
+---------+----------+------------+---+---------------+------------------------+------------+---------------------+-------------+--------------+----------------------------------+---------------+
+        1|addie     |lush        | 40|married        |alush0@shutterfly.com   |254-389-8708|3226 eastlawn pass   |temple       |texas         |assistant professor               |     2013-07-31|
+        2|rock      |cradick     | 46|married        |rcradick1@newsvine.com  |910-566-2007|4 harbort avenue     |fayetteville |north carolina|programmer, level 3               |     2018-05-27|
+        3|sydel     |sharvell    | 46|divorced       |ssharvell2@amazon.co.jp |702-187-8715|4 school place       |las vegas    |nevada        |budget/accounting analyst, level 1|     2017-10-06|
+        4|constantin|de la cruz  | 35|               |co3@bloglines.com       |402-688-7162|6 monument crossing  |omaha        |nebraska      |desktop support technician        |     2015-10-20|
+        5|gaylor    |redhole     | 38|married        |gredhole4@japanpost.jp  |917-394-6001|88 cherokee pass     |new york city|new york      |legal assistant                   |     2019-05-29|
+        6|wanda     |del mar     | 44|single         |wkunzel5@slideshare.net |937-467-6942|10864 buhler plaza   |hamilton     |ohio          |human resources assistant, level 4|     2015-03-24|
+        7|joann     |kenealy     | 41|married        |jkenealy6@bloomberg.com |513-726-9885|733 hagan parkway    |cincinnati   |ohio          |accountant, level 4               |     2013-04-17|
+        8|joete     |cudiff      | 51|separated      |jcudiff7@ycombinator.com|616-617-0965|975 dwight plaza     |grand rapids |michigan      |research nurse                    |     2014-11-16|
+        9|mendie    |alexandrescu| 46|single         |malexandrescu8@state.gov|504-918-4753|34 delladonna terrace|new orleans  |louisiana     |systems administrator, level 3    |     2021-03-12|
+       10|fey       |kloss       | 52|married        |fkloss9@godaddy.com     |808-177-0318|8976 jackson park    |honolulu     |hawaii        |chemical engineer                 |     2014-11-05|
 
 -- Now that the data is cleaned, lets look for any duplicate entries.  What is the record count?
 
@@ -178,14 +178,21 @@ gprewettfl@mac.com        |    2|
 
 -- Lets delete duplicate entries.
 
-DELETE FROM cleaned_club_member_info AS c1
-USING cleaned_club_member_info AS c2
-WHERE c1.member_id < c2.member_id 
-AND c1.member_email = c2.member_email;
+DELETE FROM 
+	cleaned_club_member_info AS c1
+USING 
+	cleaned_club_member_info AS c2
+WHERE 
+	c1.member_id < c2.member_id 
+AND 
+	c1.member_email = c2.member_email;
 
 -- What is the record count after deletion?
 
-SELECT count(*) AS new_record_count FROM cleaned_club_member_info;
+SELECT 
+	count(*) AS new_record_count 
+FROM 
+	cleaned_club_member_info;
 
 -- Results:
 
