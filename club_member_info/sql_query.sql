@@ -53,7 +53,22 @@ CREATE TABLE cleaned_club_member_info AS (
 	SELECT 
 		-- Some of the names have extra spaces and special characters.  Trim access whitespace, remove special characters 
 		-- and convert to lowercase.
-		split_part(trim(full_name), ' ', 1) AS first_name
+		-- In this particular dataset, special characters only occur in the first name that can be removed using a simple regex.
+		regexp_replace(split_part(trim(lower(full_name)), ' ', 1), '\W+', '', 'g') AS first_name,
+		-- Some last names have multiple words ('de palma' or 'de la cruz'). Convert the string to an array to calculate its length and use a 
+		-- case statement to find entries with those particular types of surnames.
+		CASE
+			WHEN array_length(string_to_array(trim(lower(full_name)), ' '), 1) = 3 THEN concat(split_part(trim(lower(full_name)), ' ', 2) || ' ' || split_part(trim(lower(full_name)), ' ', 3))
+			WHEN array_length(string_to_array(trim(lower(full_name)), ' '), 1) = 4 THEN concat(split_part(trim(lower(full_name)), ' ', 2) || ' ' || split_part(trim(lower(full_name)), ' ', 3) || ' ' || split_part(trim(lower(full_name)), ' ', 4))
+			ELSE split_part(trim(lower(full_name)), ' ', 2)
+		END AS last_name,
+		-- During data entry, some ages have an additional digit at the end.  Remove the last digit when a 3 digit age value occurs.
+		CASE
+			-- First cast the integer to a string and test the character length.
+			-- If condition is true, cast the integer to text, extract first 2 digits and cast back to numeric type.
+			WHEN length(age::text) = 3 THEN substr(age::text, 1, 2)::numeric
+			ELSE age
+		END age
 	FROM club_member_info
 );
 
