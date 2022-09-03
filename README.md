@@ -4,6 +4,9 @@ An SQL data cleaning project Repository
 ## Introduction
 This is a repo for small projects that can be used to practice data cleansing using SQL, Excel or any other method.  This small project was inspired by a post made by [Sushanta Khara](https://www.linkedin.com/in/ksushant/) on LinkedIn.
 
+### Project List:
+- [Club Member Information](https://github.com/iweld/data_cleaning/tree/main/club_member_info)
+
 ## Problem Statement
 
 In Data Analysis, the analyst must ensure that the data is 'clean' before doing any analysis.  'Dirty' data can lead to unreliable, inaccurate and/or misleading results.  Garbage in = garbage out.
