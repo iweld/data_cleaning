@@ -2,7 +2,7 @@
 An SQL data cleaning project
 
 ## Introduction
-A faux dataset of club member information.  This is a project that can be used to practice data cleansing using SQL, Excel or any other method.  This small project was inspired by a post made by [Sushanta Khara](https://www.linkedin.com/in/ksushant/) on LinkedIn.
+A faux dataset of club member information gathered via an online form.
 
 ## Problem Statement
 
@@ -20,6 +20,15 @@ These are the some steps that can be taken to properly prepare your dataset for 
 - Check for null or empty values.
 
 Using the criteria above, create a new SQL table with the properly formatted data.
+
+- Create a key id.
+- Remove special characters, ensure all entries are lowercase and free of extra whitespace.
+- Separate full name to individual columns (firstname, last_name).
+- Some ages have an extra digit at the end only show the first 2 digits.
+- Email addresses are unique.  Use this column when searching for duplicates and remove duplicate entries.
+- Convert all empty fields to NULL.
+- Separate address to three different columns (street_address, city, state)
+- All membership_dates were in the 2000's. 
 
 ## Datasets used
 This dataset contains one csv file named 'club_member_info'.
