@@ -1,5 +1,5 @@
 # data_cleaning
-An SQL data cleaning project Repository
+A repository of SQL data cleaning projects.
 
 ## Introduction
 This is a repo for small projects that can be used to practice data cleansing using SQL, Excel or any other method.  This small project was inspired by a post made by [Sushanta Khara](https://www.linkedin.com/in/ksushant/) on LinkedIn.
