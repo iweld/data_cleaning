@@ -2,7 +2,7 @@
 A repository of SQL data cleaning projects.
 
 ## Introduction
-This is a repo for small projects that can be used to practice data cleansing using SQL, Excel or any other method.  This small project was inspired by a post made by [Sushanta Khara](https://www.linkedin.com/in/ksushant/) on LinkedIn.
+This is a repo for small projects that can be used to practice data cleansing using SQL, Excel or any other method.  This small project was inspired by a post made by [Sushanta Khara](https://www.linkedin.com/posts/ksushant_data-cleaning-and-preparation-with-sql-activity-6970218566356791296-tXvN?utm_source=share&utm_medium=member_desktop) on LinkedIn.
 
 ### Project List:
 - [Club Member Information](https://github.com/iweld/data_cleaning/tree/main/club_member_info)
