@@ -8,7 +8,7 @@ A faux dataset of club member information.  This is a project that can be used t
 
 In Data Analysis, the analyst must ensure that the data is 'clean' before doing any analysis.  'Dirty' data can lead to unreliable, inaccurate and/or misleading results.  Garbage in = garbage out.
 
-These are the some steps that can be taken to properly prepare your dataaset for analysis.
+These are the some steps that can be taken to properly prepare your dataset for analysis.
 
 - Check for duplicate entries and remove them.
 - Remove extra spaces and/or other invalid characters.
@@ -22,12 +22,12 @@ These are the some steps that can be taken to properly prepare your dataaset for
 Using the criteria above, create a new SQL table with the properly formatted data.
 
 ## Datasets used
-This dataset contains one csv file named 'member_info'.
+This dataset contains one csv file named 'club_member_info'.
 
 The initial columns and their type in the provided CSV file are:
 - full_name : text
 - age : int
-- us_citizen : boolean
+- matial_status : text
 - email : text
 - phone : text
 - full_address : text
