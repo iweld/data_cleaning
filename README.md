@@ -1,8 +1,11 @@
 # data_cleaning
-An SQL data cleaning project
+An SQL data cleaning project Repository
 
 ## Introduction
-A faux dataset of club member information.  This is a project that can be used to practice data cleansing using SQL, Excel or any other method.  This small project was inspired by a post made by [Sushanta Khara](https://www.linkedin.com/in/ksushant/) on LinkedIn.
+This is a repo for small projects that can be used to practice data cleansing using SQL, Excel or any other method.  This small project was inspired by a post made by [Sushanta Khara](https://www.linkedin.com/in/ksushant/) on LinkedIn.
+
+### Project List:
+- [Club Member Information](https://github.com/iweld/data_cleaning/tree/main/club_member_info)
 
 ## Problem Statement
 
@@ -22,15 +25,13 @@ These are the some steps that can be taken to properly prepare your dataset for 
 Using the criteria above, create a new SQL table with the properly formatted data.
 
 ## Datasets used
-This dataset contains one csv file named 'club_member_info'.
 
-The initial columns and their type in the provided CSV file are:
-- full_name : text
-- age : int
-- matial_status : text
-- email : text
-- phone : text
-- full_address : text
-- job_title : text
-- membership_date : date
+This repository contains different projects/datasets to give the user many opportunities to practice:
+- Basic select statements (select, where, group by, having).
+- Aggregate functions (count, sum, min, max, avg)
+- Joins (inner, outer, left, right)
+- CTE's, temp tables and views
+- string & date manipulation functions.
+- Window functions (rank, lead, lag, row_number, ntile...)
+
 
