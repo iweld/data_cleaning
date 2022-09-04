@@ -244,125 +244,74 @@ member_id|first_name|last_name   |age|maritial_status|member_email            |p
 9|mendie    |alexandrescu| 46|single         |malexandrescu8@state.gov|504-918-4753|34 delladonna terrace|new orleans  |louisiana     |systems administrator, level 3    |     2021-03-12|
 10|fey       |kloss       | 52|married        |fkloss9@godaddy.com     |808-177-0318|8976 jackson park    |honolulu     |hawaii        |chemical engineer                 |     2014-11-05|
 
-### Find the count of all the palindromes (Excluding single and two letter words)
+### Now that the data is cleaned, lets look for any duplicate entries.  What is the record count?
 
 ````sql
-SELECT
-	COUNT(*) AS n_palindromes
-FROM
-	WORDS
-WHERE
-	WORD = REVERSE(WORD)
-	AND LENGTH(WORD) >= 3;
+SELECT 
+	count(*) AS record_count 
+FROM cleaned_club_member_info;
 ````
 
 **Results:**
 
-n_palindromes|
--------------|
-193|
+record_count|
+------------|
+2010|
 
-### Find the first 10 of all the palindromes that begin with the letter 'r' (Excluding single and two letter words)
+### All members must have a unique email address to join. Lets try to find duplicate entries.
 
 ````sql
-SELECT
-	WORD AS s_palindromes
-FROM
-	WORDS
-WHERE
-	WORD = REVERSE(WORD)
-	AND LENGTH(WORD) >= 3
-	AND word LIKE 'r%'
-ORDER BY
-	WORD
-LIMIT 10;
+SELECT 
+	member_email,
+	count(member_email)
+FROM 
+	cleaned_club_member_info
+GROUP BY 
+	member_email
+HAVING 
+	count(member_email) > 1
+````
+
+**Results: 10 duplicate entries**
+
+member_email              |count|
+--------------------------|-----|
+hbradenri@freewebs.com    |    2|
+omaccaughen1o@naver.com   |    2|
+greglar4r@answers.com     |    2|
+ehuxterm0@marketwatch.com |    3|
+nfilliskirkd5@newsvine.com|    2|
+tdunkersley8u@dedecms.com |    2|
+slamble81@amazon.co.uk    |    2|
+mmorralleemj@wordpress.com|    2|
+gprewettfl@mac.com        |    2|
+
+### Lets delete duplicate entries.
+
+````sql
+DELETE FROM 
+	cleaned_club_member_info AS c1
+USING 
+	cleaned_club_member_info AS c2
+WHERE 
+	c1.member_id < c2.member_id 
+AND 
+	c1.member_email = c2.member_email;
+````        
+### What is the record count after deletion?
+
+````sql
+SELECT 
+	count(*) AS new_record_count 
+FROM 
+	cleaned_club_member_info;;
 ````
 
 **Results:**
 
-r_palindromes|
--------------|
-radar        |
-redder       |
-refer        |
-reifier      |
-renner       |
-repaper      |
-retter       |
-rever        |
-reviver      |
-rotator      |
-
-### Return the 15th palindrome (Excluding single and double letter words) of words that start with the letter 's'
-
-````sql
-SELECT
-	WORD AS "15th_s_palindrome"
-FROM
-	WORDS
-WHERE
-	WORD = REVERSE(WORD)
-	AND LENGTH(WORD) >= 3
-	AND word LIKE 's%'
-ORDER BY
-	WORD
-LIMIT 1 
-OFFSET 14;
-````
-
-**Results:**
-
-15th_s_palindrome|
------------------|
-sooloos          |
-
-### Find the row number for every month of the year and sort them in chronological order
-
-````sql
-SELECT
-	ROW_NUM AS "Row Number",
-	WORD AS "Month"
-FROM
-	(
-	SELECT
-		WORDS.*,
-			ROW_NUMBER() OVER() AS ROW_NUM
-	FROM
-		WORDS) AS ROW
-WHERE
-	WORD IN (
-	'january',
-	'february',
-	'march',
-	'april',
-	'may',
-	'june',
-	'july',
-	'august',
-	'september',
-	'october',
-	'november',
-	'december')
-ORDER BY
-	TO_DATE(WORD, 'Month');
-````
-
-**Results:**
-
-Row Number|Month    |
-----------|---------|
-160354|january  |
-110743|february |
-179890|march    |
-18069|april    |
-177740|may      |
-162341|june     |
-162225|july     |
-23405|august   |
-285651|september|
-211036|october  |
-209152|november |
-78173|december |
+new_record_count|
+----------------|
+2000|
 
 
 
