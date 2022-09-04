@@ -2,6 +2,23 @@
 ## An SQL Data Cleaning Project
 ### by jaime.m.shaker@gmail.com
 
+For this project, you play a role as a Data Analyst the must clean and restructure a dirty dataset.
+
+A survey was done of current club members and we would like to restructure the data to a more organized and usable form.
+
+In this project, we will 
+
+1. Check for duplicate entries and remove them.
+2. Remove extra spaces and/or other invalid characters.
+3. Separate or combine values as needed.
+4. Ensure that certain values (age, dates...) are within certain range.
+5. Check for outliers.
+6. Correct incorrect spelling or inputted data.
+7. Adding new and relevant rows or columns to the new dataset.
+8. Check for null or empty values.
+
+Lets take a look at the first few rows to examine the data in its original form.
+
 ## A. Create a one column table and use that column as the primary key
 ````sql
 COPY WORDS
