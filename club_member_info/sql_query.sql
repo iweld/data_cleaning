@@ -44,7 +44,7 @@ member_id|full_name            |age|maritial_status|email                   |pho
 
 /*
 
-Lets create a temp table where we can manipulate and restructure the data without altering the original.     
+Let's create a temp table where we can manipulate and restructure the data without altering the original.     
  
  */
 
@@ -95,18 +95,18 @@ CREATE TABLE cleaned_club_member_info AS (
 		-- Trim whitespace from job title, rename to occupation and if empty convert to null type.
 		CASE
 			WHEN trim(lower(job_title)) = '' THEN NULL
-			ELSE 
-				CASE
-					WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'i'
-						THEN replace(lower(job_title), ' i', ', level 1')
-					WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'ii'
-						THEN replace(lower(job_title), ' ii', ', level 2')
-					WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'iii'
-						THEN replace(lower(job_title), ' iii', ', level 3')
-					WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'iv'
-						THEN replace(lower(job_title), ' iv', ', level 4')
-					ELSE trim(lower(job_title))
-				END 
+		ELSE 
+			CASE
+				WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'i'
+					THEN replace(lower(job_title), ' i', ', level 1')
+				WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'ii'
+					THEN replace(lower(job_title), ' ii', ', level 2')
+				WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'iii'
+					THEN replace(lower(job_title), ' iii', ', level 3')
+				WHEN array_length(string_to_array(trim(job_title), ' '), 1) > 1 AND lower(split_part(job_title, ' ', array_length(string_to_array(trim(job_title), ' '), 1))) = 'iv'
+					THEN replace(lower(job_title), ' iv', ', level 4')
+				ELSE trim(lower(job_title))
+			END 
 		END AS occupation,
 		-- A few members show membership_date year in the 1900's.  Change the year into the 2000's.
 		CASE 
@@ -141,7 +141,9 @@ member_id|first_name|last_name   |age|maritial_status|member_email            |p
 
 -- Now that the data is cleaned, lets look for any duplicate entries.  What is the record count?
 
-SELECT count(*) AS record_count FROM cleaned_club_member_info;
+SELECT 
+	count(*) AS record_count 
+FROM cleaned_club_member_info;
 
 -- Results:
 
@@ -149,8 +151,7 @@ record_count|
 ------------+
         2010|
 
--- All members must have a unique email address to join. Lets try to find duplicate entries.  Since we do not have a primary key
--- lets add a row_number and partition by member_email
+-- All members must have a unique email address to join. Lets try to find duplicate entries.
 
 SELECT 
 	member_email,
