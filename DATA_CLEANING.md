@@ -71,40 +71,28 @@ CREATE TABLE cleaned_club_member_info AS (
 ````
 
 - During data entry, some ages have an additional digit at the end.  Remove the last digit when a 3 digit age value occurs.
+- Check if value is empty.  If empty '' then change value to NULL.
+- First cast the integer to a string and test the character length.
+- If condition is true, cast the integer to text, extract first 2 digits and cast back to numeric type.
 
 ````sql
-SELECT
-	COUNT(*) as jaime_count
-FROM
-	WORDS
-WHERE
-	WORD LIKE '%jaime%';
+		CASE
+			WHEN length(age::text) = 0 THEN NULL
+			WHEN length(age::text) = 3 THEN substr(age::text, 1, 2)::numeric
+			ELSE age
+		END age,
 ````
 
-**Results:**
-
-jaime_count|
------------|
-1|
-
-### How many words contain 'shaker'?
+- Trim whitespace from maritial_status column and if empty, ensure its of null type
 
 ````sql
-SELECT
-	COUNT(*) AS shaker_count
-FROM
-	WORDS
-WHERE
-	WORD LIKE '%shaker%';
+		CASE
+			WHEN trim(maritial_status) = '' THEN NULL
+			ELSE trim(maritial_status)
+		END AS maritial_status,
 ````
 
-**Results:**
-
-shaker_count|
-------------|
-13|
-
-### What are those words?
+- Email addresses are necessary and this dataset contains valid email addresses.  Since email addresses are case insensitive, convert to lowercase and trim off any whitespace.
 
 ````sql
 SELECT
