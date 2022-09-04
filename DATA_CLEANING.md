@@ -41,22 +41,17 @@ member_id|full_name            |age|maritial_status|email                   |pho
 9|mendie alexandrescu  | 46|single         |malexandrescu8@state.gov|504-918-4753|34 Delladonna Terrace,New Orleans,Louisiana |Systems Administrator III   |     1921-03-12|
 10|fey kloss            | 52|married        |fkloss9@godaddy.com     |808-177-0318|8976 Jackson Park,Honolulu,Hawaii           |Chemical Engineer           |     2014-11-05|
 
-### How many words are in our table?
+### Lets create a temp table where we can manipulate and restructure the data without altering the original.
 
 ````sql
-SELECT
-	COUNT(*) AS word_count
-FROM
-	WORDS;
+DROP TABLE IF EXISTS cleaned_club_member_info;
+CREATE TABLE cleaned_club_member_info AS (
+	SELECT
+		member_id,
 ````
 
-**Results:**
-
-word_count|
-----------|
-370103|
-
-### How many words start with the letter 'j'?
+- Some of the names have extra spaces and special characters.  Trim access whitespace, remove special characters and convert to lowercase.
+- In this particular dataset, special characters only occur in the first name that can be removed using a simple regex.
 
 ````sql
 SELECT
