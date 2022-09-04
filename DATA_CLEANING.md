@@ -54,70 +54,23 @@ CREATE TABLE cleaned_club_member_info AS (
 - In this particular dataset, special characters only occur in the first name that can be removed using a simple regex.
 
 ````sql
-SELECT
-	COUNT(*) AS j_count
-FROM
-	WORDS
-WHERE
-	WORD LIKE 'j%';
+		regexp_replace(split_part(trim(lower(full_name)), ' ', 1), '\W+', '', 'g') AS first_name,
 ````
 
-**Results:**
-
-j_count|
--------|
-2840|
-
-
-### How many words are x letters long?
+- Some last names have multiple words ('de palma' or 'de la cruz'). 
+- Convert the string to an array to calculate its length and use a case statement to find entries with those particular types of surnames.
 
 ````sql
-SELECT
-	char_length(word) AS word_length,
-	count(*) AS word_count
-FROM
-	words
-WHERE char_length(word) > 1
-GROUP BY
-	word_length
-ORDER BY
-	word_length
+		CASE
+			WHEN array_length(string_to_array(trim(lower(full_name)), ' '), 1) = 3 
+				THEN concat(split_part(trim(lower(full_name)), ' ', 2) || ' ' || split_part(trim(lower(full_name)), ' ', 3))
+			WHEN array_length(string_to_array(trim(lower(full_name)), ' '), 1) = 4 
+				THEN concat(split_part(trim(lower(full_name)), ' ', 2) || ' ' || split_part(trim(lower(full_name)), ' ', 3) || ' ' || split_part(trim(lower(full_name)), ' ', 4))
+			ELSE split_part(trim(lower(full_name)), ' ', 2)
+		END AS last_name,
 ````
 
-**Results:**
-
-word_length|word_count|
------------|----------|
-2|       427|
-3|      2130|
-4|      7186|
-5|     15918|
-6|     29874|
-7|     41998|
-8|     51627|
-9|     53402|
-10|     45872|
-11|     37539|
-12|     29125|
-13|     20944|
-14|     14149|
-15|      8846|
-16|      5182|
-17|      2967|
-18|      1471|
-19|       760|
-20|       359|
-21|       168|
-22|        74|
-23|        31|
-24|        12|
-25|         8|
-27|         3|
-28|         2|
-29|         2|
-31|         1|
-
-### How many words contain 'jaime'?
+- During data entry, some ages have an additional digit at the end.  Remove the last digit when a 3 digit age value occurs.
 
 ````sql
 SELECT
