@@ -201,9 +201,15 @@ new_record_count|
 ----------------+
             2000|	
 	
+-- What is the record count where marial_status is null?
+
+SELECT 
+	count(*) AS null_record_count 
+FROM 
+	cleaned_club_member_info
+WHERE maritial_status IS null;	
 	
-	
-	
+-- Results:
 	
 	
 	
