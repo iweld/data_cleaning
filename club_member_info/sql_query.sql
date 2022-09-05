@@ -211,7 +211,9 @@ WHERE maritial_status IS null;
 	
 -- Results:
 	
-	
+null_record_count|
+-----------------+
+               20|	
 	
 	
 
