@@ -214,6 +214,206 @@ WHERE maritial_status IS null;
 null_record_count|
 -----------------+
                20|	
+               
+-- What are the different maritial statuses?
+
+SELECT 
+	maritial_status,
+	count(*) AS new_record_count 
+FROM 
+	cleaned_club_member_info
+GROUP BY 
+	maritial_status;
+
+-- Results:
+
+maritial_status|new_record_count|
+---------------+----------------+
+divored        |               4|
+single         |             656|
+separated      |             167|
+               |              20|
+divorced       |             282|
+married        |             881|
+
+-- As we can see, we have a spelling error for 4 records.  Let's update the record and correct the error.
+
+UPDATE
+	cleaned_club_member_info
+SET 
+	maritial_status = 'divorced'
+WHERE 
+	maritial_status = 'divored';
+
+-- Lets check the records
+
+SELECT 
+	maritial_status,
+	count(*) AS new_record_count 
+FROM 
+	cleaned_club_member_info
+GROUP BY 
+	maritial_status;
+
+-- Results:
+
+maritial_status|new_record_count|
+---------------+----------------+
+single         |             656|
+separated      |             167|
+               |              20|
+divorced       |             286|
+married        |             881|
+
+
+SELECT 
+	state
+FROM 
+	cleaned_club_member_info
+GROUP BY 
+	state;
+
+-- We also have quite a few mispellings of state names.
+
+state                |
+---------------------+
+utah                 |
+nebraska             |
+district of columbia |
+texas                |
+kansus               |
+districts of columbia|
+iowa                 |
+northcarolina        |
+kalifornia           |
+arkansas             |
+new mexico           |
+michigan             |
+south carolina       |
+west virginia        |
+oklahoma             |
+connecticut          |
+missouri             |
+delaware             |
+tejas                |
+rhode island         |
+georgia              |
+north dakota         |
+tennesseeee          |
+hawaii               |
+oregon               |
+pennsylvania         |
+minnesota            |
+alabama              |
+tennessee            |
+new jersey           |
+kentucky             |
+alaska               |
+virginia             |
+indiana              |
+nevada               |
+newyork              |
+south dakota         |
+north carolina       |
+montana              |
+ohio                 |
+california           |
+kansas               |
+louisiana            |
+ puerto rico         |
+mississippi          |
+maryland             |
+south dakotaaa       |
+colorado             |
+massachusetts        |
+tej+f823as           |
+washington           |
+wisconsin            |
+new york             |
+new hampshire        |
+illinois             |
+arizona              |
+idaho                |
+florida              |
+
+UPDATE
+	cleaned_club_member_info
+SET 
+	state = 'kansas'
+WHERE 
+	state = 'kansus';
+
+UPDATE
+	cleaned_club_member_info
+SET 
+	state = 'district of columbia'
+WHERE 
+	state = 'districts of columbia';
+
+UPDATE
+	cleaned_club_member_info
+SET 
+	state = 'north carolina'
+WHERE 
+	state = 'northcarolina';
+
+UPDATE
+	cleaned_club_member_info
+SET 
+	state = 'california'
+WHERE 
+	state = 'kalifornia';
+
+UPDATE
+	cleaned_club_member_info
+SET 
+	state = 'texas'
+WHERE 
+	state = 'tejas';
+
+UPDATE
+	cleaned_club_member_info
+SET 
+	state = 'texas'
+WHERE 
+	state = 'tej+f823as';
+
+UPDATE
+	cleaned_club_member_info
+SET 
+	state = 'tennessee'
+WHERE 
+	state = 'tennesseeee';
+
+UPDATE
+	cleaned_club_member_info
+SET 
+	state = 'new york'
+WHERE 
+	state = 'newyork';
+
+UPDATE
+	cleaned_club_member_info
+SET 
+	state = 'puerto rico'
+WHERE 
+	state = ' puerto rico';
+
+SELECT
+	count(DISTINCT state)
+FROM 
+	cleaned_club_member_info
+	
+SELECT 
+	state
+FROM 
+	cleaned_club_member_info
+GROUP BY 
+	state;
+
+               
+-- Output to csv file.
+COPY cleaned_club_member_info TO 'club_member_cleaned.csv' DELIMITER ',' CSV HEADER;
 	
 	
 
