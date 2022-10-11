@@ -41,7 +41,7 @@ member_id|full_name            |age|maritial_status|email                   |pho
 9|mendie alexandrescu  | 46|single         |malexandrescu8@state.gov|504-918-4753|34 Delladonna Terrace,New Orleans,Louisiana |Systems Administrator III   |     1921-03-12|
 10|fey kloss            | 52|married        |fkloss9@godaddy.com     |808-177-0318|8976 Jackson Park,Honolulu,Hawaii           |Chemical Engineer           |     2014-11-05|
 
-### Lets create a temp table where we can manipulate and restructure the data without altering the original.
+#### Lets create a temp table where we can manipulate and restructure the data without altering the original.
 
 ````sql
 DROP TABLE IF EXISTS cleaned_club_member_info;
@@ -244,7 +244,7 @@ member_id|first_name|last_name   |age|maritial_status|member_email            |p
 9|mendie    |alexandrescu| 46|single         |malexandrescu8@state.gov|504-918-4753|34 delladonna terrace|new orleans  |louisiana     |systems administrator, level 3    |     2021-03-12|
 10|fey       |kloss       | 52|married        |fkloss9@godaddy.com     |808-177-0318|8976 jackson park    |honolulu     |hawaii        |chemical engineer                 |     2014-11-05|
 
-### Now that the data is cleaned, lets look for any duplicate entries.  What is the record count?
+#### Now that the data is cleaned, lets look for any duplicate entries.  What is the record count?
 
 ````sql
 SELECT 
@@ -258,7 +258,7 @@ record_count|
 ------------|
 2010|
 
-### All members must have a unique email address to join. Lets try to find duplicate entries.
+#### All members must have a unique email address to join. Lets try to find duplicate entries.
 
 ````sql
 SELECT 
@@ -286,7 +286,7 @@ slamble81@amazon.co.uk    |    2|
 mmorralleemj@wordpress.com|    2|
 gprewettfl@mac.com        |    2|
 
-### Lets delete duplicate entries.
+#### Lets delete duplicate entries.
 
 ````sql
 DELETE FROM 
@@ -298,7 +298,7 @@ WHERE
 AND 
 	c1.member_email = c2.member_email;
 ````        
-### What is the record count after deletion?
+#### What is the record count after deletion?
 
 ````sql
 SELECT 
